@@ -37,12 +37,16 @@ To run this project locally, you need to have the following installed:
     ```
 
 4. **Make sure your PHP can handle HTTPS by configuring the php.ini file:**
+
    ***Go to your php.ini file, if it doesn't exist, copy the php.ini-development and rename the extension to .ini***
+
    ***Look for this line:***
    ```bash
    ;extension=openssl
    ```
+
    ***Uncomment the line by removing the semicolon (;)***
+
    ***Check if it's properly configured by running this line in your command line:***
    ```bash
    php --ini
