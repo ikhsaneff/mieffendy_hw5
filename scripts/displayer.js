@@ -1,10 +1,14 @@
-function displayProducts(newProductData) {
+function displayProducts(productData) {
     let resultHTML = "";
 
-    newProductData.forEach(result => {
+    if (!productData || productData.length === 0) {
+        productData = JSON.parse(localStorage.getItem("productData")) || [];
+    }
+
+    productData.forEach(result => {
         resultHTML += `
             <div class="product-card">
-                <a href="product.php?id=${result.id}">
+                <a href="product.html?id=${result.id}">
                     ${insertImage(result.id)}
                     <p class="text-bold text-black">${result.name}</p>
                 </a>

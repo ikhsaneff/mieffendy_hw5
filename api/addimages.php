@@ -2,7 +2,7 @@
 $current_dir = __DIR__;
 $product_json = json_decode(file_get_contents('php://input'), true)['value'];
 
-$file_path = $current_dir . '/../../data/visualcontent.csv';
+$file_path = $current_dir . '/../data/visualcontent.csv';
 
 $file = fopen($file_path, 'a');
 

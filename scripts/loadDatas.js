@@ -1,35 +1,28 @@
-function loadProductData() {
-    Papa.parse(`/data/product.csv`, {
-        download: true,
-        header: true,
-        dynamicTyping: true,
-        skipEmptyLines: true,
-        complete: function (results) {
-            localStorage.setItem("productData", JSON.stringify(results.data));
+function loadAllDataAndDisplay() {
+    Promise.all([
+        fetch('/api/products.php?type=product').then(r => r.json()),
+        fetch('/api/products.php?type=image').then(r => r.json())
+    ])
+    .then(([products, images]) => {
+        localStorage.setItem("productData", JSON.stringify(products));
+        localStorage.setItem("imageData", JSON.stringify(images));
+        
+        const featuredProductElement = document.querySelector("#featured-products-list");
+        if (featuredProductElement) {
+            featuredProductElement.innerHTML = displayProducts(products);
         }
-    });
-}
-
-function loadImageData() {
-    Papa.parse(`/data/visualcontent.csv`, {
-        download: true,
-        header: true,
-        dynamicTyping: true,
-        skipEmptyLines: true,
-        newline: "\n",
-        delimiter: ",",
-        complete: function (results) {
-            console.log("Here")
-            localStorage.setItem("imageData", JSON.stringify(results.data));
-        }
-    });
+    })
+    .catch(error => console.error(error));
 }
 
 addEventListener("DOMContentLoaded", function () {
-    if (!localStorage.getItem("productData")) {
-        loadProductData()
+    if (!localStorage.getItem("productData") || !localStorage.getItem("imageData")) {
+        loadAllDataAndDisplay();
+    } else {
+        const featuredProductElement = document.querySelector("#featured-products-list");
+        const productData = JSON.parse(localStorage.getItem("productData"));
+        if (featuredProductElement && productData.length > 0) {
+            featuredProductElement.innerHTML = displayProducts(productData);
+        }
     }
-    if (!localStorage.getItem("imageData")) {
-        loadImageData()
-    }
-})
+});

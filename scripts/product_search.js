@@ -22,6 +22,7 @@ function searchProduct(query) {
         cleaned_query = query.toLowerCase().trim()
 
         const productData = JSON.parse(localStorage.getItem("productData")) 
+        console.log(productData)
         const searchResults = productData.filter(data => data.name.toLowerCase().includes(cleaned_query))
 
         if (searchResults.length > 0) {

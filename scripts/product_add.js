@@ -11,11 +11,6 @@ document.addEventListener("DOMContentLoaded", function () {
     document.querySelector("#add-product-btn").addEventListener("click", function () {
         newProductsSection.style.display = "block"
     })
-
-    console.log("Here1")
-
-    console.log(JSON.parse(localStorage.getItem("productData")))
-    console.log(JSON.parse(localStorage.getItem("imageData")))
 })
 
 function openForm() {
@@ -34,8 +29,8 @@ addProductForm.addEventListener("submit", function (e) {
 
     const currentProductData = JSON.parse(localStorage.getItem("productData")) || []
     const currentImageData = JSON.parse(localStorage.getItem("imageData")) || []
-    const productPOSTurl = "/backend/models/addProducts.php"
-    const imagePOSTurl = "/backend/models/addImages.php"
+    const productPOSTurl = "/api/addproducts.php"
+    const imagePOSTurl = "/api/addimages.php"
 
     const productName = document.querySelector("#product-name").value.toString().replaceAll(",", "")
     const productPrice = document.querySelector("#product-price").value.toString()
@@ -44,7 +39,16 @@ addProductForm.addEventListener("submit", function (e) {
 
     const currentProductLength = currentProductData.length
 
-    const newProductData = {id: currentProductLength + 1, name: `${productName}`, description: `${formatDescription(productDescription)}`, average_rating: 0, price: parseFloat(productPrice) || 0, num_reviews: 0}
+    const newProductData = {
+        id: currentProductLength + 1, 
+        name: `${productName}`, 
+        description: `${formatDescription(productDescription)}`, 
+        average_rating: 0, 
+        price: parseFloat(productPrice) || 0, 
+        num_reviews: 0,
+        pokemon: null,
+        location: null,
+    }
     postData(productPOSTurl, newProductData, "productData")
 
     const currentImageLength = currentImageData.length

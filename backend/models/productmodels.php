@@ -28,7 +28,9 @@ class ProductModels {
                     $product[2],
                     $product[3],
                     $product[4],
-                    $product[5]
+                    $product[5],
+                    $product[6],
+                    $product[7]
                 );
             }
         }
@@ -96,7 +98,6 @@ class ProductModels {
         return $html;
     }
 
-    
     function searchProduct(string $query) {
         if (empty($query)) {
             return [];
@@ -114,5 +115,5 @@ class ProductModels {
 
         return $results;
     }
-
 }
+?>
